@@ -15,16 +15,26 @@ class GameSprite(sprite.Sprite):
 
 
 class Player(GameSprite):
-    def update(self):
+    def updateL(self):
         keys_pressed = key.get_pressed()
-        if keys_pressed[K_LEFT] and self.rect.x > 0:
-            self.rect.x -= self.speed
-        if keys_pressed[K_RIGHT] and self.rect.x < 635:
-            self.rect.x += self.speed
+        if keys_pressed[K_UP] and self.rect.y > 5:
+            self.rect.y -= self.speed
+        if keys_pressed[K_DOWN] and self.rect.y < 500 - 60:
+            self.rect.y += self.speed
+            
+    def updateR(self):
+        keys_pressed = key.get_pressed()
+        if keys_pressed[K_w] and self.rect.y > 5:
+            self.rect.y -= self.speed
+        if keys_pressed[K_s] and self.rect.y < 500 - 60:
+            self.rect.y += self.speed        
 
     def fire(self):
-        bullet = Bullet("bullet.png", 5, self.rect.centerx - 7, self.rect.top - 5, 15, 20)
-        bullets.add(bullet)
+        skateboard = Bullet("skateboard.png", 5, self.rect.centerx - 7, self.rect.top - 5, 15, 20)
+        skateboards.add(bullet)
+
+player1 = Player("skateboard.png", 5, 10, 30, 50, 60)
+player2 = Player("skateboard.png", 5, 450, 30, 50, 60)
 
 MAIN_WINDOW_SIZE = [500, 500]
 background_colour = [250, 50, 150]
@@ -38,6 +48,11 @@ finished = False
 FPS = 60
 
 while not(finished):
+    window.fill(background_colour)
+    player1.reset()
+    player1.updateL()
+    player2.reset()
+    player2.updateR()
 
     for even in event.get():
         if even.type == QUIT:
